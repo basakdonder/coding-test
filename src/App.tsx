@@ -8,6 +8,20 @@ export default function App() {
     lng: 0,
   });
 
+  const [randomCoords, setRandomCoords] = useState({
+    lat: 0,
+    lng: 0,
+  });
+
+  const [ranges, setRanges] = useState({
+    latMin: -90,
+    latMax: 90,
+    lngMin: -180,
+    lngMax: 180,
+  });
+
+  const [zoom, setZoom] = useState(15);
+
   useLoadScript({
     googleMapsApiKey: "",
   });
@@ -21,10 +35,19 @@ export default function App() {
     });
   }, []);
 
+  function randomLocation() {
+    setRandomCoords({
+      lat: Math.random() * (ranges.latMax - ranges.latMin + 1) + ranges.latMin,
+      lng: Math.random() * (ranges.lngMax - ranges.lngMin + 1) + ranges.lngMin,
+    });
+    setZoom(5);
+    setCoords(randomCoords);
+  }
+
   function Map() {
     return (
       <GoogleMap
-        zoom={15}
+        zoom={zoom}
         center={{ lat: coords.lat, lng: coords.lng }}
         mapContainerClassName="map-container"
       >
@@ -36,5 +59,15 @@ export default function App() {
     );
   }
 
-  return <Map />;
+  return (
+    <div className="App">
+      <Map />
+      <div className="btns">
+        <button onClick={() => randomLocation()}>
+          Teleport me to somewhere random
+        </button>
+        
+      </div>
+    </div>
+  );
 }
