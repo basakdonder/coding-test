@@ -29,7 +29,7 @@ export default function App() {
     },
   ]);
 
-  useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: "",
   });
 
@@ -81,6 +81,8 @@ export default function App() {
       </GoogleMap>
     );
   }
+
+  if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <div className="App">
