@@ -22,6 +22,13 @@ export default function App() {
 
   const [zoom, setZoom] = useState(15);
 
+  const [visitedLocations, setVisitedLocations] = useState([
+    {
+      lat: 0,
+      lng: 0,
+    },
+  ]);
+
   useLoadScript({
     googleMapsApiKey: "",
   });
@@ -34,6 +41,12 @@ export default function App() {
       });
     });
   }, []);
+
+  useEffect(() => {
+    setVisitedLocations(
+      [...visitedLocations].concat({ lat: coords.lat, lng: coords.lng })
+    );
+  }, [coords]);
 
   function randomLocation() {
     setRandomCoords({
@@ -71,6 +84,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <h1>Map Project</h1>
       <Map />
       <div className="btns">
         <button onClick={() => randomLocation()}>
@@ -78,6 +92,14 @@ export default function App() {
         </button>
         <button onClick={() => currentLocation()}>Bring me back home</button>
       </div>
+
+      <ul>
+        {visitedLocations.map((location, index) => (
+          <li key={index}>
+            Latitude: {location.lat}, Longtitude: {location.lng}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
