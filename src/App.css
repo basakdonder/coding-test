@@ -9,3 +9,13 @@
     align-items: center;
     flex-direction: column;
 }
+
+.btns {
+    margin: 20px 0;
+}
+
+.btns button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
