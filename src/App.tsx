@@ -44,6 +44,16 @@ export default function App() {
     setCoords(randomCoords);
   }
 
+  function currentLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCoords({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+    setZoom(15);
+  }
+
   function Map() {
     return (
       <GoogleMap
@@ -66,7 +76,7 @@ export default function App() {
         <button onClick={() => randomLocation()}>
           Teleport me to somewhere random
         </button>
-        
+        <button onClick={() => currentLocation()}>Bring me back home</button>
       </div>
     </div>
   );
